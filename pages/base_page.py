@@ -5,6 +5,7 @@ import math
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from .locators import BasePageLocators
+from selenium.webdriver.common.by import By
 
 
 class BasePage:
@@ -12,6 +13,10 @@ class BasePage:
         self.browser = browser
         self.url = url
         self.browser.implicitly_wait(timeout)  # команда для неявного ожидания
+
+    def check_page_language(self):
+        current_language_form = self.browser.find_element(By.CSS_SELECTOR, "[name='language'] [selected='selected']")
+        return current_language_form.get_attribute("value")
 
     def is_element_present(self, how, what):
         try:
@@ -40,6 +45,10 @@ class BasePage:
 
     def get_current_url(self):
         return self.browser.current_url
+
+    def go_to_basket_page(self):
+        link = self.browser.find_element(*BasePageLocators.BASKET_LINK)
+        link.click()
 
     def go_to_login_page(self):
         link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)

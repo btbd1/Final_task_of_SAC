@@ -9,11 +9,6 @@ class BasketPage(BasePage):
     def should_be_items_in_basket(self):
         assert self.is_element_present(*BasketPageLocators.BASKET_ITEMS), "No one items in basket"
 
-    # def should_be_message_in_empty_basket(self):
-    #     text_message = self.browser.find_element(*BasketPageLocators.EMPTY_BASKET_MESSAGE).text
-    #     substring_en = "Your basket is empty."
-    #     assert substring_en in text_message, "Message of empty basket not found"
-
     def should_be_message_in_empty_basket(self):
         languages = {
             "ar": "سلة التسوق فارغة",

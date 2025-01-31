@@ -36,12 +36,22 @@ class BasePage:
 
     def is_disappeared(self, how, what, timeout=4):
         try:
-            WebDriverWait(self.browser, timeout, 1, Exception). \
+            WebDriverWait(self.browser, timeout, 1, (Exception,)). \
                 until_not(EC.presence_of_element_located((how, what)))
         except TimeoutException:
             return False
 
         return True
+
+    def find_element(self, by, locator, timeout=10):
+        """Ожидает появления элемента и возвращает его"""
+        try:
+            return WebDriverWait(self.browser, timeout).until(
+                EC.presence_of_element_located((by, locator))
+            )
+        except Exception as e:
+            # return None  # Если элемент не найден, вернуть None
+            print(f"Произошла ошибка: {e}")
 
     def get_current_url(self):
         return self.browser.current_url
@@ -56,6 +66,10 @@ class BasePage:
 
     def open(self):
         self.browser.get(self.url)
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+                                                                     " probably unauthorised user"
 
     def should_be_login_link(self):
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"

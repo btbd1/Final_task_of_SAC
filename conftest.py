@@ -25,6 +25,8 @@ def browser(request):
         options.add_argument("--disable-dev-shm-usage")  # Избегает проблем с разделяемой памятью
         # options.add_argument("--disable-extensions")  # Отключает все расширения
         # options.add_argument("--remote-debugging-port=9222")  # Использует отладочный порт
+        # options.add_argument("--headless") - запуск без интерфейса
+        # options.add_argument("--window-position=-2400,-2400") - поднятие окна за пределы экрана
         options.add_experimental_option('prefs', {'intl.accept_languages': language})
         browser = webdriver.Chrome(service=service, options=options)
     elif browser_name == 'firefox':
